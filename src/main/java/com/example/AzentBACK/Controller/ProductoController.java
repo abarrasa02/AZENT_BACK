@@ -1,6 +1,7 @@
 package com.example.AzentBACK.Controller;
 
 import com.example.AzentBACK.DTO.ProductoDTO;
+import com.example.AzentBACK.Entity.Producto;
 import com.example.AzentBACK.Provider.ProductoProvider;
 import com.example.AzentBACK.Utils.MessageResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,7 @@ public class ProductoController {
         }
     }
     @GetMapping("/producto/{id}")
-    public MessageResponseDto<ProductoDTO>findById(@PathVariable("id")Long id){
+    public MessageResponseDto<Producto>findById(@PathVariable("id")Long id){
         try {
             return productoProvider.findById(id);
         }catch (Exception e){

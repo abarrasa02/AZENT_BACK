@@ -1,6 +1,7 @@
 package com.example.AzentBACK.Provider;
 
 import com.example.AzentBACK.DTO.ProductoDTO;
+import com.example.AzentBACK.Entity.Producto;
 import com.example.AzentBACK.Utils.MessageResponseDto;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public interface ProductoProvider {
 
     MessageResponseDto<List<ProductoDTO>>getProductos();
 
-    MessageResponseDto<ProductoDTO>findById(Long id);
+    MessageResponseDto<Producto>findById(Long id);
 
 }

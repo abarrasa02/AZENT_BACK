@@ -76,13 +76,13 @@ public class ProductoProviderImpl implements ProductoProvider {
             return MessageResponseDto.fail("Error:No se han podido recoger los productos");
         }
     }
-    public MessageResponseDto<ProductoDTO>findById(Long id){
+    public MessageResponseDto<Producto>findById(Long id){
         try {
             Optional<Producto>producto=productoRepository.findById(id);
             if (!producto.isPresent()){
                 return  MessageResponseDto.fail("No se encontrado el producto");
             }
-            return  MessageResponseDto.success(modelMapper.map(producto,ProductoDTO.class));
+            return  MessageResponseDto.success(producto.get());
 
         }catch (Exception e){
             return MessageResponseDto.fail("No se ha encontrado el producto");
