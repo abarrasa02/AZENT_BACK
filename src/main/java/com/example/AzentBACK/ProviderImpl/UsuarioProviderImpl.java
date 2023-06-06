@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioProviderImpl implements UsuarioProvider {
 
@@ -26,13 +28,13 @@ public class UsuarioProviderImpl implements UsuarioProvider {
         userRepository.save(user);
         return MessageResponseDto.success("Se ha añadido correctamente el usuario");
     }
-    public MessageResponseDto<Boolean>loginUser(String usuario,String contraseña){
+    public MessageResponseDto<Usuario>loginUser(String usuario,String contraseña){
         try {
-            Long access=userRepository.loginSuccess(usuario,contraseña);
-            if(access>0){
-                return MessageResponseDto.success(true);
+           Optional<Usuario> userAccess=userRepository.loginSuccess(usuario,contraseña);
+            if(userAccess.isPresent()){
+                return MessageResponseDto.success(userAccess.get());
             }else{
-                return MessageResponseDto.success(false);
+                return MessageResponseDto.fail("Usuario o contraseña incorrectos");
             }
         }catch (Exception e){
             return MessageResponseDto.fail("Ha ocurrido un error");

@@ -1,26 +1,40 @@
 package com.example.AzentBACK.Controller;
 
 import com.example.AzentBACK.DTO.UsuarioDTO;
+import com.example.AzentBACK.Entity.Usuario;
 import com.example.AzentBACK.Provider.UsuarioProvider;
 import com.example.AzentBACK.Utils.MessageResponseDto;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @RestController
 @RequestMapping("/usuario")
 
 public class UsuarioController {
-
+    private static final Logger logger = LoggerFactory.getLogger(Usuario.class);
+    @Autowired
     UsuarioProvider usuarioProvider;
 
     @PostMapping("/addUsuario")
-    public MessageResponseDto<String> addUsuario(@RequestBody UsuarioDTO userDTO){
+    public MessageResponseDto<String> addUsuario(@RequestBody UsuarioDTO user){
         try {
-            return usuarioProvider.addUsuario(userDTO);
+            return usuarioProvider.addUsuario(user);
         }catch (Exception e){
+            logger.info("ERROR:"+e.getMessage());
             return  MessageResponseDto.fail("Error al guardar el usuario");
+
+        }
+    }
+    @GetMapping("/login")
+    public  MessageResponseDto<Usuario>loginUser(@RequestParam String nombre,@RequestParam String contraseña){
+        try {
+            return usuarioProvider.loginUser(nombre,contraseña);
+        }catch (Exception e){
+            return MessageResponseDto.fail("Usuario o contraseña incorrectos");
         }
     }
 }
