@@ -1,6 +1,7 @@
 package com.example.AzentBACK.ProviderImpl;
 
 import com.example.AzentBACK.DTO.CategoriaDTO;
+import com.example.AzentBACK.DTO.ProductoDTO;
 import com.example.AzentBACK.Entity.Categoria;
 import com.example.AzentBACK.Provider.CategoriaProvider;
 import com.example.AzentBACK.Repository.CategoriaRepository;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +26,7 @@ public class CategoriaProviderImpl  implements CategoriaProvider {
     private ModelMapper modelMapper=new ModelMapper();
     public MessageResponseDto<List<Categoria>> getAllCategorias(){
         try {
-            List<Categoria>listCategorias=categoriaRepository.findAll();
+            List<Categoria>listCategorias=categoriaRepository.selectCatActivas();
             if(listCategorias.isEmpty()){
                 return MessageResponseDto.fail("No se ha encontrado categorias");
             }else {
@@ -36,8 +38,13 @@ public class CategoriaProviderImpl  implements CategoriaProvider {
     }
     public MessageResponseDto<String>addCategoria(CategoriaDTO cat){
         try {
+
+
             Categoria categoria=new Categoria();
             categoria=modelMapper.map(cat,Categoria.class);
+
+            byte[] imageBytes= Base64.getDecoder().decode(categoria.getImagen());
+            categoria.setImagen(imageBytes);
             categoriaRepository.save(categoria);
             return MessageResponseDto.success("Se ha añadido un categoria correctamente");
         }catch (Exception e){
@@ -48,7 +55,8 @@ public class CategoriaProviderImpl  implements CategoriaProvider {
         try {
             Optional<Categoria> categoria=categoriaRepository.findById(id);
             if (categoria.isPresent()){
-                categoriaRepository.delete(categoria.get());
+                categoria.get().setActivo("N");
+                categoriaRepository.save(categoria.get());
                 return MessageResponseDto.success("Se ha eliminado la categoria correctamente");
             }else{
                 return  MessageResponseDto.success("No se ha podido eliminar la categoria");
@@ -82,4 +90,5 @@ public class CategoriaProviderImpl  implements CategoriaProvider {
             return MessageResponseDto.fail("No se ha encontrado la categoria");
         }
     }
+
 }

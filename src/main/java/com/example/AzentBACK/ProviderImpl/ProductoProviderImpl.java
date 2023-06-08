@@ -76,6 +76,15 @@ public class ProductoProviderImpl implements ProductoProvider {
             return MessageResponseDto.fail("Error:No se han podido recoger los productos");
         }
     }
+
+    public MessageResponseDto<List<Producto>>filterProductos(Long idCategoria){
+        try {
+            List<Producto>list=productoRepository.filter(idCategoria);
+            return MessageResponseDto.success(list);
+        }catch (Exception e){
+            return MessageResponseDto.fail("Error al filtrar productos");
+        }
+    }
     public MessageResponseDto<Producto>findById(Long id){
         try {
             Optional<Producto>producto=productoRepository.findById(id);
