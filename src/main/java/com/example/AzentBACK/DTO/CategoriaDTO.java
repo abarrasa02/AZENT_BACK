@@ -11,5 +11,5 @@ public class CategoriaDTO {
     private Long id;
     private String nombre;
     private String activo;
-    private String imagen;
+    private byte[] imagen;
 }

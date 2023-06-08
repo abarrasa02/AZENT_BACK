@@ -42,9 +42,10 @@ public class CategoriaProviderImpl  implements CategoriaProvider {
 
             Categoria categoria=new Categoria();
             categoria=modelMapper.map(cat,Categoria.class);
-
-            byte[] imageBytes= Base64.getDecoder().decode(categoria.getImagen());
-            categoria.setImagen(imageBytes);
+            if(cat.getImagen()!=null){
+                byte[] imageBytes= Base64.getDecoder().decode(categoria.getImagen());
+                categoria.setImagen(imageBytes);
+            }
             categoriaRepository.save(categoria);
             return MessageResponseDto.success("Se ha añadido un categoria correctamente");
         }catch (Exception e){
