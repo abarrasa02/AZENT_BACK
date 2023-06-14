@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/usuario")
@@ -19,7 +21,7 @@ public class UsuarioController {
     @Autowired
     UsuarioProvider usuarioProvider;
 
-    @PostMapping("/addUsuario")
+    @PostMapping("/register")
     public MessageResponseDto<String> addUsuario(@RequestBody UsuarioDTO user){
         try {
             return usuarioProvider.addUsuario(user);
@@ -35,6 +37,14 @@ public class UsuarioController {
             return usuarioProvider.loginUser(nombre,contraseña);
         }catch (Exception e){
             return MessageResponseDto.fail("Usuario o contraseña incorrectos");
+        }
+    }
+    @GetMapping("/all")
+    public  MessageResponseDto <List<Usuario>>getAllUsers(){
+        try {
+            return usuarioProvider.getAllUsers();
+        }catch (Exception e){
+            return  MessageResponseDto.fail("Error al recoger los usuarios correctamente");
         }
     }
 }

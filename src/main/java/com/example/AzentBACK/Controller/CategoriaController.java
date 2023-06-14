@@ -7,6 +7,7 @@ import com.example.AzentBACK.Utils.MessageResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class CategoriaController {
     }
 
     @PostMapping("/add")
-    public MessageResponseDto<String>addCategoria(@RequestBody CategoriaDTO categoriaDTO){
+    public MessageResponseDto<Long>addCategoria(@RequestBody CategoriaDTO categoriaDTO){
         try {
             return categoriaProvider.addCategoria(categoriaDTO);
         }catch (Exception e){
@@ -45,7 +46,7 @@ public class CategoriaController {
         }
     }
     @PatchMapping("/edit/{id}")
-    public MessageResponseDto<String>updateCategoria(@PathVariable("id")Long id,@RequestBody CategoriaDTO categoriaDTO){
+    public MessageResponseDto<Long>updateCategoria(@PathVariable("id")Long id,@RequestBody CategoriaDTO categoriaDTO){
         try {
             return categoriaProvider.updateCategoria(id,categoriaDTO);
 
@@ -54,11 +55,19 @@ public class CategoriaController {
         }
     }
     @GetMapping("/categoria/{id}")
-    public MessageResponseDto<CategoriaDTO>findById(@PathVariable("id")Long id){
+    public MessageResponseDto<Categoria>findById(@PathVariable("id")Long id){
         try {
             return categoriaProvider.findById(id);
         }catch (Exception e){
             return MessageResponseDto.fail("No se ha encontrado la categoria");
+        }
+    }
+    @PostMapping("/getImage")
+    public  MessageResponseDto<byte[]>getImage(@RequestParam("image") MultipartFile image,@RequestParam ("id")Long id){
+        try {
+            return categoriaProvider.getImage(id,image);
+        }catch (Exception e){
+            return MessageResponseDto.fail("Error al recoger las imagen");
         }
     }
 

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,7 @@ public class UsuarioProviderImpl implements UsuarioProvider {
         if(contEmail>0){
             return MessageResponseDto.fail("Ya hay un usuario registrado con ese email");
         }
+
         userRepository.save(user);
         return MessageResponseDto.success("Se ha añadido correctamente el usuario");
     }
@@ -38,6 +40,14 @@ public class UsuarioProviderImpl implements UsuarioProvider {
             }
         }catch (Exception e){
             return MessageResponseDto.fail("Ha ocurrido un error");
+        }
+    }
+    public  MessageResponseDto<List<Usuario>>getAllUsers(){
+        try {
+            List<Usuario>listUsers=userRepository.findAll();
+            return MessageResponseDto.success(listUsers);
+        }catch (Exception e){
+            return MessageResponseDto.fail("No se ha podido recoger los usuarios correctamente");
         }
     }
 }

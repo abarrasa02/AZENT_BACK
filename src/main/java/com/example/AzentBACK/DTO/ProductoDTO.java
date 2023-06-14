@@ -1,5 +1,6 @@
 package com.example.AzentBACK.DTO;
 
+import com.example.AzentBACK.Entity.Categoria;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,6 @@ public class ProductoDTO {
     private String descripcion;
     private Float precio;
     private String activo;
-    private Long categoriaId;
+    private byte[] imagen;
+    private Long  categoria;
 }

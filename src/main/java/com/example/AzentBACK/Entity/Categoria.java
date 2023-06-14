@@ -24,6 +24,6 @@ public class Categoria implements Serializable {
     @Column(name = "activo")
     private String activo;
 
-    @Column(name = "imagen")
+    @Column(name = "imagen", nullable = true, length = 100000)
     private byte[] imagen;
 }
