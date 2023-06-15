@@ -23,4 +23,5 @@ public interface ProductoProvider {
     MessageResponseDto<List<Producto>>filterByIdCategoria(Long id);
 
 
+
 }

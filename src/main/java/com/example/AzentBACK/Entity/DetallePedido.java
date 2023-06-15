@@ -1,15 +1,22 @@
 package com.example.AzentBACK.Entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "azento_detallePedidos")
 public class DetallePedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "IDPedido", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_DetallesPedidos_Pedidos"))

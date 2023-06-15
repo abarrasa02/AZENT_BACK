@@ -37,7 +37,12 @@ public class CarritoProviderImpl implements CarritoProvider {
         }
     }
     public MessageResponseDto<List<Carrito>> saveModifiedItems(List<Carrito> carritoList) {
-       return MessageResponseDto.success(carritoRepository.saveAll(carritoList));
+        try {
+            return MessageResponseDto.success(carritoRepository.saveAll(carritoList));
+        }catch (Exception e){
+            return  MessageResponseDto.fail(e.getMessage());
+        }
+
     }
     public MessageResponseDto<List<Carrito>>getByUsuario(Long id){
         try {

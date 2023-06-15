@@ -14,4 +14,10 @@ public interface CarritoRepository  extends JpaRepository<Carrito,Long> {
 
     @Query("select c from Carrito  c where c.usuario.id=:idUser")
     List<Carrito>findCarritoBy(@Param("idUser")Long id);
+
+    @Query("SELECT c from Carrito c where c.usuario.id=:idUser ")
+    List<Carrito> buscarProdcutosByIdUser(@Param("idUser") Long idUsuario);
+
+
+
 }

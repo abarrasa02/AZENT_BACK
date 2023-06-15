@@ -37,7 +37,7 @@ public class CarritoController {
     }
 
     @PutMapping("/modificar")
-    public MessageResponseDto<List<Carrito>> saveModifiedItems(@RequestParam List<Carrito> carritoList){
+    public MessageResponseDto<List<Carrito>> saveModifiedItems(@RequestBody List<Carrito> carritoList){
         try {
             return  carritoProvider.saveModifiedItems(carritoList);
         }catch (Exception e){

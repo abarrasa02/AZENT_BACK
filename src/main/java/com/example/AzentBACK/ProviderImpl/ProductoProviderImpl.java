@@ -82,6 +82,8 @@ public class ProductoProviderImpl implements ProductoProvider {
         }
     }
 
+
+
     public MessageResponseDto<List<Producto>>getProductos(){
         try {
             List<Producto>list=productoRepository.findAll();
@@ -93,16 +95,7 @@ public class ProductoProviderImpl implements ProductoProvider {
         }
     }
 
-    public MessageResponseDto<List<Producto>>filterProductos(Long idCategoria){
-        try {
-            List<Producto>list=productoRepository.filter(idCategoria);
-            list.stream().forEach(producto -> producto.setImagen(ImagenUtil.decompressImage(producto.getImagen())));
 
-            return MessageResponseDto.success(list);
-        }catch (Exception e){
-            return MessageResponseDto.fail("Error al filtrar productos");
-        }
-    }
     public MessageResponseDto<Producto>findById(Long id){
         try {
             Optional<Producto>producto=productoRepository.findById(id);
