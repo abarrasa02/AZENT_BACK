@@ -9,6 +9,7 @@ import com.example.AzentBACK.Utils.MessageResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -58,7 +59,13 @@ public class StockProviderImpl implements StockProvider {
             return MessageResponseDto.fail("Error al comprobar el stock");
         }
     }
-
+    public MessageResponseDto<List<Stock>>getAll(){
+        try {
+            return MessageResponseDto.success(stockRepository.findAll());
+        } catch (Exception e){
+            return MessageResponseDto.fail("Error al recoger stock");
+        }
+    }
     public MessageResponseDto<String>restarStock(Long idProducto,int cantidad){
         try {
             Stock s=stockRepository.findByIdProducto(idProducto);

@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/stock")
@@ -38,8 +40,17 @@ public class StockController {
     }
 
 
+    @GetMapping("/all")
+    public MessageResponseDto<List<Stock>>getAll(){
+        try {
+            return stockProvider.getAll();
+        }catch (Exception e){
+            return MessageResponseDto.fail("Error al recoger los stocks");
+        }
+    }
+
     @GetMapping("/comprobar")
-    MessageResponseDto<Boolean>comprobarStock(@RequestParam("idProducto") Long idProducto,@RequestParam("cantidad") int Cantidad){
+    public MessageResponseDto<Boolean>comprobarStock(@RequestParam("idProducto") Long idProducto,@RequestParam("cantidad") int Cantidad){
         try {
             return stockProvider.comprobarStock(idProducto,Cantidad);
         }catch (Exception e){

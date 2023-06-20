@@ -14,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Slf4j
 @Service
@@ -54,7 +54,8 @@ public class ProductoProviderImpl implements ProductoProvider {
             if(!producto.isPresent()){
                 return MessageResponseDto.fail("No se ha podido eliminar el producto");
             }
-            productoRepository.deleteById(id);
+           producto.get().setActivo("N");
+            productoRepository.save(producto.get());
             return MessageResponseDto.success("Se ha eliminado el producto correctamente");
         }catch (Exception e){
             return MessageResponseDto.fail("Se ha producido un error al intentar eliminar el producto");
