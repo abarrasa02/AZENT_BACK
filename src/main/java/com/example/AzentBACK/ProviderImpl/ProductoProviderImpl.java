@@ -87,7 +87,7 @@ public class ProductoProviderImpl implements ProductoProvider {
 
     public MessageResponseDto<List<Producto>>getProductos(){
         try {
-            List<Producto>list=productoRepository.findAll();
+            List<Producto>list=productoRepository.filterActivos();
             list.stream().forEach(producto -> producto.setImagen(ImagenUtil.decompressImage(producto.getImagen())));
 
             return MessageResponseDto.success(list);

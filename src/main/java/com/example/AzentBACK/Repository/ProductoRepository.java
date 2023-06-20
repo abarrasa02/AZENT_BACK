@@ -17,4 +17,7 @@ public interface ProductoRepository  extends JpaRepository<Producto,Long> {
 
     @Query("select  p from Producto p where p.categoria.id=:idCategoria and p.activo='S'")
     List<Producto>filter(@Param("idCategoria")Long idCategoria);
+
+    @Query("select  p from Producto p where  p.activo='S'")
+    List<Producto>filterActivos();
 }
